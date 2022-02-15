@@ -6,5 +6,6 @@ services:
       command: python ./api/manage.py runserver 0.0.0.0:8000
       volumes:
         - .:/api
+        - .:/api/autoGmeet
       ports:
         - "8000:8000"
