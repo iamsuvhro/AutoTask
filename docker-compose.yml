@@ -1,11 +1,24 @@
 version: '3'
 
 services:
-   web:
-      build: .
-      command: python ./api/manage.py runserver 0.0.0.0:8000
-      volumes:
-        - .:/api
-        - .:/api/autoGmeet
-      ports:
-        - "8000:8000"
+  selenium:
+    image: selenium/standalone-chrome
+    ports:
+    - 4444:4444
+  selenium-api:
+    build: 
+      context: .
+    volumes:
+      - .:/api
+    command: sh -c "python3 bot.py"
+    depends_on:
+      - selenium
+
+  web:
+    build: .
+    command: python ./api/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/api
+      - .:/api/autoGmeet
+    ports:
+      - "8000:8000"
